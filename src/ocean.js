@@ -25,6 +25,11 @@ export async function createOcean(renderer,scene,camera){
   document.documentElement.dataset.fft='passed';
   const ocean=new Ocean(renderer,params);await ocean.updateInitialSpectrum();
   const material=createOceanSurfaceMaterial(ocean.cascades,{lengthScales:params.lengthScales,shading,detailTex:makeDetailTexture()});
+  // Taper the open-ocean displacement toward the beach and exclude dry land.
+  const oceanPosition=material.positionNode;
+  material.positionNode=Fn(()=>{const p=oceanPosition.toVar();const x=p.x.add(shading.originXZ.x),z=p.z.add(shading.originXZ.y);const coast=float(-13.35).sub(sin(x.mul(.12)).mul(2.3));p.y.mulAssign(smoothstep(0,25,coast.sub(z)));return p;})();
+  material.alphaTest=.5;
+  material.opacityNode=Fn(()=>{const p=positionWorld;const coast=float(-13.35).sub(sin(p.x.mul(.12)).mul(2.3));return float(1).sub(smoothstep(coast.sub(.2),coast.add(.2),p.z));})();
   const grid=createRadialGrid({rings:340,sectors:innerWidth<700?256:448,spacing:.28,soften:30});
   const mesh=new Mesh(grid.geometry,material);mesh.frustumCulled=false;scene.add(mesh);
   // A thin, world-anchored shore wash follows the actual shoreline of the beach mesh.
