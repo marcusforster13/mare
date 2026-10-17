@@ -4,3 +4,5 @@ dist/
 .env*
 !.env.example
 *.log
+public/sky/*.png
+public/textures/*.jpg

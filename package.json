@@ -1,1 +1,23 @@
-{"name":"mare","version":"2.0.0","private":true,"type":"module","scripts":{"dev":"vite --host 127.0.0.1 --port 4173","build":"vite build","preview":"vite preview --host 127.0.0.1 --port 4173","test":"node --test tests/*.test.mjs"},"dependencies":{"three":"0.184.0"},"devDependencies":{"vite":"8.3.4"},"engines":{"node":">=22.12"}}
+{
+  "name": "mare",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4173",
+    "build": "npm run assets && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "test": "node --test tests/*.test.mjs",
+    "assets": "node scripts/fetch-assets.mjs",
+    "predev": "npm run assets"
+  },
+  "dependencies": {
+    "three": "0.184.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.4"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

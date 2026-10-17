@@ -102,7 +102,9 @@ export class FFT {
     const v = [];
     for (let s = 0; s < this.logN; s++) {
       h.push(this._hStep(field, scratch, s));
-      v.push(this._vStep(field, scratch, s));
+      // With an odd log2(N), the horizontal result ends in scratch.
+      // Swap the vertical pair so both axes still finish in field (128/512).
+      v.push(this._vStep(this.logN % 2 ? scratch : field, this.logN % 2 ? field : scratch, s));
     }
     return { h, v, permute: this._permute(field) };
   }

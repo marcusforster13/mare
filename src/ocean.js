@@ -20,7 +20,8 @@ export async function createOcean(renderer,scene,camera){
   const sky=createSkyDome(shading,42000);scene.add(sky);scene.fogNode=createAerialPerspective(shading,{density:shading.hazeAir});
   const environment=await new TextureLoader().loadAsync(import.meta.env.BASE_URL+'sky/sky_131_2k.png');environment.mapping=EquirectangularReflectionMapping;environment.colorSpace=SRGBColorSpace;scene.environment=environment;scene.environmentIntensity=.45;
   const fftTest=await validateFFT(renderer,params.N);
-  if(!fftTest.pass)throw new Error('A verificação da simulação FFT falhou.');
+  console.info('Ocean FFT validation',JSON.stringify(fftTest));
+  if(!fftTest.pass)throw new Error('A verificação da simulação FFT falhou: '+JSON.stringify(fftTest));
   document.documentElement.dataset.fft='passed';
   const ocean=new Ocean(renderer,params);await ocean.updateInitialSpectrum();
   const material=createOceanSurfaceMaterial(ocean.cascades,{lengthScales:params.lengthScales,shading,detailTex:makeDetailTexture()});

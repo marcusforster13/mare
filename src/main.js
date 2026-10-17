@@ -66,7 +66,6 @@ parasol(2.1,-3.3);parasol(9,2.8);
 for(const x of [-13,13])box(.12,4.7,.12,mats.dark,x,3.55,-6.5);
 for(const z of [-6.5,10]){const pts=[];for(let i=0;i<=40;i++){const t=i/40;pts.push(new THREE.Vector3(-13+t*26,5.8-Math.sin(t*Math.PI)*1.1,z));}const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x3b3d32}));scene.add(line);for(let i=0;i<=20;i++){const t=i/20;const y=5.8-Math.sin(t*Math.PI)*1.1;beam([-13+t*26,y,z],[-13+t*26,y-.18,z],.012,mats.dark);ball(.075,mats.flame,-13+t*26,y-.23,z);}}
 // Distant headlands anchor the horizon.
-for(let i=0;i<9;i++){const rock=mesh(new THREE.SphereGeometry(1,16,12),new THREE.MeshStandardMaterial({color:0x777c68,roughness:1}),-150+i*12,-3,-145-Math.sin(i)*12);rock.scale.set(20,8+rand()*14,18);}
 // Small seabirds glide over the open sea.
 const birds=[];for(let i=0;i<7;i++){const g=new THREE.Group();for(const s of [-1,1]){const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(s*.35,.1,0),new THREE.Vector3(s*.7,0,.1)]);g.add(new THREE.Line(geo,new THREE.LineBasicMaterial({color:0x4f5b57})));}scene.add(g);birds.push(g);}
 
